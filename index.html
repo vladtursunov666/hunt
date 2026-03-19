@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Авто с торгов — простой список</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 16px 40px;
+      }
+
+      .hero {
+        background: #111827;
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 34px;
+      }
+
+      p {
+        margin: 0;
+        color: #94a3b8;
+      }
+
+      .list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .card {
+        background: #111827;
+        border-radius: 20px;
+        padding: 20px;
+      }
+
+      .card h2 {
+        margin: 0 0 16px;
+        font-size: 24px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .item {
+        background: #1e293b;
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+
+      .label {
+        display: block;
+        font-size: 13px;
+        color: #94a3b8;
+        margin-bottom: 4px;
+      }
+
+      .value {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .deviation {
+        color: #4ade80;
+      }
+
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <h1>Список автомобилей</h1>
+        <p>Простой проект без зависимостей: один HTML-файл, 5 тестовых автомобилей и обычный JavaScript.</p>
+      </section>
+
+      <section id="cars" class="list"></section>
+    </main>
+
+    <script>
+      const cars = [
+        {
+          brand: 'Toyota',
+          model: 'Camry',
+          lotPrice: 1520000,
+          averagePrice: 1892500,
+          deviationPercent: -19.69,
+        },
+        {
+          brand: 'BMW',
+          model: 'X5',
+          lotPrice: 2850000,
+          averagePrice: 3282222,
+          deviationPercent: -13.17,
+        },
+        {
+          brand: 'Lada',
+          model: 'Vesta',
+          lotPrice: 880000,
+          averagePrice: 978750,
+          deviationPercent: -10.09,
+        },
+        {
+          brand: 'Kia',
+          model: 'Sportage',
+          lotPrice: 1710000,
+          averagePrice: 1845000,
+          deviationPercent: -7.32,
+        },
+        {
+          brand: 'Hyundai',
+          model: 'Solaris',
+          lotPrice: 980000,
+          averagePrice: 1035000,
+          deviationPercent: -5.31,
+        },
+      ];
+
+      const formatPrice = (value) => new Intl.NumberFormat('ru-RU').format(value) + ' ₽';
+      const root = document.getElementById('cars');
+
+      root.innerHTML = cars
+        .map(
+          (car, index) => `
+            <article class="card">
+              <h2>${index + 1}. ${car.brand} ${car.model}</h2>
+              <div class="grid">
+                <div class="item">
+                  <span class="label">Марка</span>
+                  <span class="value">${car.brand}</span>
+                </div>
+                <div class="item">
+                  <span class="label">Модель</span>
+                  <span class="value">${car.model}</span>
+                </div>
+                <div class="item">
+                  <span class="label">Цена лота</span>
+                  <span class="value">${formatPrice(car.lotPrice)}</span>
+                </div>
+                <div class="item">
+                  <span class="label">Средняя цена</span>
+                  <span class="value">${formatPrice(car.averagePrice)}</span>
+                </div>
+                <div class="item">
+                  <span class="label">Процент отклонения</span>
+                  <span class="value deviation">${car.deviationPercent}%</span>
+                </div>
+              </div>
+            </article>
+          `,
+        )
+        .join('');
+    </script>
+  </body>
+</html>
